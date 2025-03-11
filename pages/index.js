@@ -1,4 +1,4 @@
-import Image from "next/image";
+/* import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 
 const geistSans = Geist({
@@ -109,6 +109,28 @@ export default function Home() {
           Go to nextjs.org →
         </a>
       </footer>
+    </div>
+  );
+}
+ */
+import { useState } from "react";
+import SearchBar from "../componentes/SearchBar";
+import ProductList from "../componentes/ProductList";
+
+export default function Home() {
+  const [products, setProducts] = useState([]);
+
+  const handleSearch = async (query) => {
+    const res = await fetch(`/api/search?query=${query}`);
+    const data = await res.json();
+    setProducts(data);
+  };
+
+  return (
+    <div>
+      <h1 className="text-center text-3xl font-bold p-4">Comparador de Precios</h1>
+      <SearchBar onSearch={handleSearch} />
+      <ProductList products={products} />
     </div>
   );
 }
